@@ -1,0 +1,4 @@
+tl_*
+*.sqlite
+*.pyc
+venv/
