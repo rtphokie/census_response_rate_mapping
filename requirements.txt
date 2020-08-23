@@ -2,4 +2,5 @@ requests
 requests_cache
 pandas
 numpy
+openpyxl
 git+https://github.com/matplotlib/basemap.git

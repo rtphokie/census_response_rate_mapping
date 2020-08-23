@@ -1,4 +1,7 @@
 tl_*
 *.sqlite
 *.pyc
+*.xlsx
+*.png
 venv/
+/bounding.csv
