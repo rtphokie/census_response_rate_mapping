@@ -1,6 +1,9 @@
 requests
 requests_cache
 pandas
+ntpath
+osgeo
+unicodedata
 numpy
 openpyxl
 git+https://github.com/matplotlib/basemap.git

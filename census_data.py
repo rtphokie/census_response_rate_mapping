@@ -1,4 +1,5 @@
 import requests
+from pprint import pprint
 from os import path
 import pandas as pd
 import numpy as np
@@ -15,8 +16,9 @@ def get_response_by_county(county='*', state='37', tract='*',
 
 def get_response_by_tract(county='*', state='37', tract='*',
                           PARAMSTOFETCH='GEO_ID,NAME,CRRALL,CRRINT,RESP_DATE'):
-    return _get_response(county=county, state=state, tract=tract, datares='tract',
+    response = _get_response(county=county, state=state, tract=tract, datares='tract',
                          PARAMSTOFETCH=PARAMSTOFETCH)
+    return response
 
 def _get_response(county='*', state='37', tract='*', datares='tract',
                   PARAMSTOFETCH='GEO_ID,NAME,CRRALL,CRRINT,RESP_DATE'):
@@ -61,3 +63,19 @@ def get_bounding_box(state=None, counties=[]):
               'lon_0': np.mean([df['extentw'].min(),df['extente'].min()])
               }
     return df, bounds
+
+def get_dma_data(market_name, state=None):
+    # DMA county map source: Sood, Gaurav, Harvard University, 2016, "Geographic Information on Designated Media Markets",
+    # https://doi.org/10.7910/DVN/IVXEHT
+    filename = 'data/county_dma.csv'
+    if not path.exists(filename):
+        raise FileNotFoundError(f"please ensure {filename} is in the data directory, available from https://doi.org/10.7910/DVN/IVXEHT")
+    df = pd.read_csv(filename)
+    # df.set_index('month')
+    df['DMA'] = df['DMA'].str.strip()  # remove trailing whitespace from Harvard sourced data
+    df.query(f'DMA == "{market_name}"', inplace=True)
+    if state is not None:
+        df['STATE'] = df['STATE'].str.strip()  # remove trailing whitespace from Harvard sourced data
+        df.query(f'STATE == "{state}"', inplace=True)
+    countyfips = list(df['CNTYFP'])
+    return(df, countyfips)

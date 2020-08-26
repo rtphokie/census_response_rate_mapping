@@ -1,7 +1,9 @@
 tl_*
 *.sqlite
 *.pyc
+*.psd
 *.xlsx
 *.png
 venv/
+data/sr20_500k/
 /bounding.csv
