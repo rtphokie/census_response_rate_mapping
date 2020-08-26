@@ -7,3 +7,5 @@ tl_*
 venv/
 data/sr20_500k/
 /bounding.csv
+data/
+old/

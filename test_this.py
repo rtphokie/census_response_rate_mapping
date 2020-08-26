@@ -33,6 +33,13 @@ class MyTestCase(unittest.TestCase):
         data, countyfips = get_dma_data('RALEIGH (NC) - DURHAM (NC) - FAYETTEVILLE (NC)', state="NC")
         self.assertEqual(21, len(data))
 
+    def test_NC_tracts_xsls(self):
+        df_geo, bounds = get_bounding_box(state=37)
+        ax, fig, map = make_map(bounds)
+        data = draw_tract_data(ax, map, fig)
+        df_response = pd.DataFrame.from_dict(data, orient='index')
+        df_response.to_excel("nc_tracts.xlsx")
+
     def test_map_central_NC_tracts(self):
         #Counties in Raleigh-Durham DMA
         df, countyfips = get_dma_data('RALEIGH (NC) - DURHAM (NC) - FAYETTEVILLE (NC)', state="NC")
